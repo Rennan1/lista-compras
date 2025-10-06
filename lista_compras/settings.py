@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-quv=ej%r9g)i1u&25+!v6)kqi6$1oj62t(7h#s7%3g2np*o%^3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'lista-compras-imqk.onrender.com']
 
 
 # Application definition
