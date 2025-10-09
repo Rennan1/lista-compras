@@ -4,26 +4,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Compras</title>
+    <title>Mercado da Clara & Rennan</title>
 
     <!-- Bootstrap CSS -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    >
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
-      rel="stylesheet"
-    >
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <style>
+        /* --- Fundo e container --- */
+        body {
+            background: radial-gradient(circle at top, #2b2d31 0%, #181a1b 100%);
+            color: #e8e8e8;
+            min-height: 100vh;
+            font-family: "Segoe UI", system-ui, sans-serif;
+        }
+        .container {
+            max-width: 720px;
+        }
+
+        /* --- Título principal --- */
+        h1 {
+            font-weight: 700;
+            color: #f8f9fa;
+        }
+        .bi-cart4 {
+            animation: pulse 2.2s infinite ease-in-out;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.15); opacity: 0.8; }
+        }
+
+        /* --- Cards de lista --- */
         .list-group-item {
             border-radius: 8px;
             margin-bottom: 8px;
+            background-color: #1e1f22;
+            border: 1px solid #2b2d31;
+            transition: all 0.2s ease;
+        }
+        .list-group-item:hover {
+            background-color: #2a2b30;
+            transform: scale(1.01);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.25);
         }
 
-        /* Ícones padronizados */
+        /* --- Botões com ícones --- */
         .btn-icon {
             display: inline-flex;
             align-items: center;
@@ -32,21 +59,20 @@
             height: 36px;
             border-radius: 6px;
             font-size: 1.1rem;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+        .btn-icon:hover {
+            transform: scale(1.15);
+            box-shadow: 0 0 6px rgba(255,255,255,0.3);
         }
 
-        .btn-icon i {
-            pointer-events: none;
-        }
-
-        /* Mantém os botões em linha em qualquer tela */
+        /* --- Ações e nome --- */
         .actions {
             display: flex;
             flex-wrap: nowrap !important;
             gap: 8px;
             justify-content: flex-end;
         }
-
-        /* Nome do item ocupa o espaço restante */
         .item-nome {
             flex: 1;
             font-weight: 500;
@@ -54,15 +80,34 @@
             text-overflow: ellipsis;
             white-space: nowrap;
         }
+
+        /* --- Cabeçalhos com ícones e separadores --- */
+        h3 {
+            font-weight: 600;
+        }
+        h3 i {
+            font-size: 1.3rem;
+        }
+        hr {
+            height: 1px;
+            background-color: currentColor;
+        }
     </style>
 </head>
-<body class="bg-dark text-light">
-    
+<body>
     <div class="container mt-4">
 
-        <h1 class="text-center mb-3">🛒 Mercado da Clara & Rennan 🛒</h1>
-        <p class="text-center text-muted mb-5">Para facilitar a organização das nossas compras. ❤️</p>
+        <!-- Cabeçalho -->
+        <h1 class="text-center mb-3">
+            <i class="bi bi-cart4 me-2 text-success"></i>
+            Mercado da Clara & Rennan
+            <i class="bi bi-cart4 ms-2 text-success"></i>
+        </h1>
+        <p class="text-center text-muted mb-5">
+            Para facilitar a organização das nossas compras. <span class="text-danger">❤️</span>
+        </p>
 
+        <!-- Imagem -->
         <div class="text-center my-4">
             <img src="{% static 'img/rennan-clara.png' %}" 
                 alt="Clara e Rennan"
@@ -71,11 +116,15 @@
                 style="object-fit: cover;">
         </div>
 
-        <!-- ITENS PENDENTES -->
-        <h3 class="text-danger">Itens Pendentes</h3>
+        <!-- Itens Pendentes -->
+        <h3 class="text-danger d-flex align-items-center mb-3">
+            <i class="bi bi-bag-x-fill me-2"></i> Itens Pendentes
+            <hr class="flex-grow-1 ms-3 opacity-25">
+        </h3>
+
         <ul class="list-group mb-4">
             {% for item in pendentes %}
-                <li class="list-group-item bg-dark text-light border-secondary d-flex align-items-center justify-content-between">
+                <li class="list-group-item d-flex align-items-center justify-content-between">
                     <span class="item-nome">{{ item.nome }}</span>
                     <div class="actions">
                         <a href="{% url 'editar_item' item.id %}" class="btn btn-sm btn-primary btn-icon" title="Editar">
@@ -90,15 +139,19 @@
                     </div>
                 </li>
             {% empty %}
-                <li class="list-group-item text-muted bg-dark border-secondary">Nenhum item pendente.</li>
+                <li class="list-group-item text-muted">Nenhum item pendente.</li>
             {% endfor %}
         </ul>
 
-        <!-- ITENS NO CARRINHO -->
-        <h3 class="text-success">Itens no Carrinho</h3>
+        <!-- Itens no Carrinho -->
+        <h3 class="text-success d-flex align-items-center mb-3">
+            <i class="bi bi-bag-check-fill me-2"></i> Itens no Carrinho
+            <hr class="flex-grow-1 ms-3 opacity-25">
+        </h3>
+
         <ul class="list-group mb-4">
             {% for item in carrinho %}
-                <li class="list-group-item bg-dark text-light border-secondary d-flex align-items-center justify-content-between">
+                <li class="list-group-item d-flex align-items-center justify-content-between">
                     <span class="item-nome">{{ item.nome }}</span>
                     <div class="actions">
                         <a href="{% url 'editar_item' item.id %}" class="btn btn-sm btn-primary btn-icon" title="Editar">
@@ -113,20 +166,19 @@
                     </div>
                 </li>
             {% empty %}
-                <li class="list-group-item text-muted bg-dark border-secondary">Nenhum item no carrinho.</li>
+                <li class="list-group-item text-muted">Nenhum item no carrinho.</li>
             {% endfor %}
         </ul>
 
-        <!-- BOTÃO DE ADICIONAR -->
+        <!-- Botão Adicionar -->
         <div class="text-center mb-5">
             <a href="{% url 'adicionar_item' %}" class="btn btn-outline-success btn-lg">
                 <i class="bi bi-plus-lg"></i> Adicionar Item
             </a>
         </div>
-
     </div>
 
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
 </body>
 </html>
