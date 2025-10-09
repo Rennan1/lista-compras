@@ -1,4 +1,4 @@
-{% load static %} <!-- Carrega a biblioteca de tags estáticas do Django -->
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-BR" data-bs-theme="dark">
 <head>
@@ -6,29 +6,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Compras</title>
 
-    <!-- Bootstrap CSS (via CDN) -->
+    <!-- Bootstrap CSS -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
     >
+    <!-- Bootstrap Icons -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+      rel="stylesheet"
+    >
 
     <style>
-        /* Pequeno toque visual extra */
         .list-group-item {
             border-radius: 8px;
             margin-bottom: 8px;
         }
 
-        /* Melhora espaçamento dos botões no mobile */
-        .btn {
-            white-space: nowrap;
+        /* Ícones padronizados */
+        .btn-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            font-size: 1.1rem;
         }
 
-        @media (max-width: 576px) {
-            .btn {
-                flex: 1 1 100%;
-                text-align: center;
-            }
+        .btn-icon i {
+            pointer-events: none;
+        }
+
+        /* Mantém os botões em linha em qualquer tela */
+        .actions {
+            display: flex;
+            flex-wrap: nowrap !important;
+            gap: 8px;
+            justify-content: flex-end;
+        }
+
+        /* Nome do item ocupa o espaço restante */
+        .item-nome {
+            flex: 1;
+            font-weight: 500;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
     </style>
 </head>
@@ -51,16 +75,18 @@
         <h3 class="text-danger">Itens Pendentes</h3>
         <ul class="list-group mb-4">
             {% for item in pendentes %}
-                <li class="list-group-item bg-dark text-light border-secondary">
-                    <div class="row align-items-center">
-                        <div class="col-12 col-md-5 fw-semibold">
-                            {{ item.nome }}
-                        </div>
-                        <div class="col-12 col-md-7 mt-2 mt-md-0 d-flex flex-wrap justify-content-md-end gap-2">
-                            <a href="{% url 'editar_item' item.id %}" class="btn btn-sm btn-primary">Editar</a>
-                            <a href="{% url 'excluir_item' item.id %}" class="btn btn-sm btn-danger">Excluir</a>
-                            <a href="{% url 'adicionar_carrinho' item.id %}" class="btn btn-sm btn-success">Adicionar ao Carrinho</a>
-                        </div>
+                <li class="list-group-item bg-dark text-light border-secondary d-flex align-items-center justify-content-between">
+                    <span class="item-nome">{{ item.nome }}</span>
+                    <div class="actions">
+                        <a href="{% url 'editar_item' item.id %}" class="btn btn-sm btn-primary btn-icon" title="Editar">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>
+                        <a href="{% url 'excluir_item' item.id %}" class="btn btn-sm btn-danger btn-icon" title="Excluir">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                        <a href="{% url 'adicionar_carrinho' item.id %}" class="btn btn-sm btn-success btn-icon" title="Adicionar ao Carrinho">
+                            <i class="bi bi-cart-plus"></i>
+                        </a>
                     </div>
                 </li>
             {% empty %}
@@ -72,16 +98,18 @@
         <h3 class="text-success">Itens no Carrinho</h3>
         <ul class="list-group mb-4">
             {% for item in carrinho %}
-                <li class="list-group-item bg-dark text-light border-secondary">
-                    <div class="row align-items-center">
-                        <div class="col-12 col-md-5 fw-semibold">
-                            {{ item.nome }}
-                        </div>
-                        <div class="col-12 col-md-7 mt-2 mt-md-0 d-flex flex-wrap justify-content-md-end gap-2">
-                            <a href="{% url 'editar_item' item.id %}" class="btn btn-sm btn-primary">Editar</a>
-                            <a href="{% url 'excluir_item' item.id %}" class="btn btn-sm btn-danger">Excluir</a>
-                            <a href="{% url 'remover_carrinho' item.id %}" class="btn btn-sm btn-secondary">Remover do Carrinho</a>
-                        </div>
+                <li class="list-group-item bg-dark text-light border-secondary d-flex align-items-center justify-content-between">
+                    <span class="item-nome">{{ item.nome }}</span>
+                    <div class="actions">
+                        <a href="{% url 'editar_item' item.id %}" class="btn btn-sm btn-primary btn-icon" title="Editar">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>
+                        <a href="{% url 'excluir_item' item.id %}" class="btn btn-sm btn-danger btn-icon" title="Excluir">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                        <a href="{% url 'remover_carrinho' item.id %}" class="btn btn-sm btn-secondary btn-icon" title="Remover do Carrinho">
+                            <i class="bi bi-cart-dash"></i>
+                        </a>
                     </div>
                 </li>
             {% empty %}
@@ -91,12 +119,13 @@
 
         <!-- BOTÃO DE ADICIONAR -->
         <div class="text-center mb-5">
-            <a href="{% url 'adicionar_item' %}" class="btn btn-outline-success btn-lg">➕ Adicionar Item</a>
+            <a href="{% url 'adicionar_item' %}" class="btn btn-outline-success btn-lg">
+                <i class="bi bi-plus-lg"></i> Adicionar Item
+            </a>
         </div>
 
     </div>
 
-    <!-- Bootstrap JS (opcional, para animações e componentes interativos) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
