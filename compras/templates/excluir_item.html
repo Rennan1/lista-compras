@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-bs-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +11,7 @@
       rel="stylesheet"
     >
 </head>
-<body class="bg-light">
+<body class="bg-dark">
 
     <div class="container mt-5">
         <div class="card shadow-sm mx-auto border-danger" style="max-width: 500px;">
@@ -20,14 +20,14 @@
 
                 <p class="mb-4 fs-5">
                     Tem certeza de que deseja excluir o item<br>
-                    <strong class="text-dark">"{{ item.nome }}"</strong>?
+                    <strong class="text-light">"{{ item.nome }}"</strong>?
                 </p>
 
                 <form method="post">
                     {% csrf_token %}
                     <div class="d-flex justify-content-around">
                         <button type="submit" class="btn btn-danger">
-                            🔥 Sim, excluir
+                            🗑️ Sim, excluir
                         </button>
                         <a href="{% url 'index' %}" class="btn btn-secondary">
                             ⬅️ Cancelar
