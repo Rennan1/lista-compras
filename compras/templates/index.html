@@ -11,8 +11,28 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
     >
+
+    <style>
+        /* Pequeno toque visual extra */
+        .list-group-item {
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        /* Melhora espaçamento dos botões no mobile */
+        .btn {
+            white-space: nowrap;
+        }
+
+        @media (max-width: 576px) {
+            .btn {
+                flex: 1 1 100%;
+                text-align: center;
+            }
+        }
+    </style>
 </head>
-<body class="bg-dark">
+<body class="bg-dark text-light">
     
     <div class="container mt-4">
 
@@ -27,21 +47,24 @@
                 style="object-fit: cover;">
         </div>
 
-
         <!-- ITENS PENDENTES -->
         <h3 class="text-danger">Itens Pendentes</h3>
         <ul class="list-group mb-4">
             {% for item in pendentes %}
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <span>{{ item.nome }}</span>
-                    <span>
-                        <a href="{% url 'editar_item' item.id %}" class="btn btn-sm btn-primary">Editar</a>
-                        <a href="{% url 'excluir_item' item.id %}" class="btn btn-sm btn-danger">Excluir</a>
-                        <a href="{% url 'adicionar_carrinho' item.id %}" class="btn btn-sm btn-success">Adicionar ao Carrinho</a>
-                    </span>
+                <li class="list-group-item bg-dark text-light border-secondary">
+                    <div class="row align-items-center">
+                        <div class="col-12 col-md-5 fw-semibold">
+                            {{ item.nome }}
+                        </div>
+                        <div class="col-12 col-md-7 mt-2 mt-md-0 d-flex flex-wrap justify-content-md-end gap-2">
+                            <a href="{% url 'editar_item' item.id %}" class="btn btn-sm btn-primary">Editar</a>
+                            <a href="{% url 'excluir_item' item.id %}" class="btn btn-sm btn-danger">Excluir</a>
+                            <a href="{% url 'adicionar_carrinho' item.id %}" class="btn btn-sm btn-success">Adicionar ao Carrinho</a>
+                        </div>
+                    </div>
                 </li>
             {% empty %}
-                <li class="list-group-item text-muted">Nenhum item pendente.</li>
+                <li class="list-group-item text-muted bg-dark border-secondary">Nenhum item pendente.</li>
             {% endfor %}
         </ul>
 
@@ -49,21 +72,25 @@
         <h3 class="text-success">Itens no Carrinho</h3>
         <ul class="list-group mb-4">
             {% for item in carrinho %}
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <span>{{ item.nome }}</span>
-                    <span>
-                        <a href="{% url 'editar_item' item.id %}" class="btn btn-sm btn-primary">Editar</a>
-                        <a href="{% url 'excluir_item' item.id %}" class="btn btn-sm btn-danger">Excluir</a>
-                        <a href="{% url 'remover_carrinho' item.id %}" class="btn btn-sm btn-secondary">Remover do Carrinho</a>
-                    </span>
+                <li class="list-group-item bg-dark text-light border-secondary">
+                    <div class="row align-items-center">
+                        <div class="col-12 col-md-5 fw-semibold">
+                            {{ item.nome }}
+                        </div>
+                        <div class="col-12 col-md-7 mt-2 mt-md-0 d-flex flex-wrap justify-content-md-end gap-2">
+                            <a href="{% url 'editar_item' item.id %}" class="btn btn-sm btn-primary">Editar</a>
+                            <a href="{% url 'excluir_item' item.id %}" class="btn btn-sm btn-danger">Excluir</a>
+                            <a href="{% url 'remover_carrinho' item.id %}" class="btn btn-sm btn-secondary">Remover do Carrinho</a>
+                        </div>
+                    </div>
                 </li>
             {% empty %}
-                <li class="list-group-item text-muted">Nenhum item no carrinho.</li>
+                <li class="list-group-item text-muted bg-dark border-secondary">Nenhum item no carrinho.</li>
             {% endfor %}
         </ul>
 
         <!-- BOTÃO DE ADICIONAR -->
-        <div class="text-center">
+        <div class="text-center mb-5">
             <a href="{% url 'adicionar_item' %}" class="btn btn-outline-success btn-lg">➕ Adicionar Item</a>
         </div>
 
