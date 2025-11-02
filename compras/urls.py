@@ -25,4 +25,5 @@ urlpatterns = [
     path('excluir_item/<int:item_id>/', views.excluir_item, name='excluir_item'),
     path('adicionar_carrinho/<int:item_id>/', views.adicionar_carrinho, name='adicionar_carrinho'),
     path('remover_carrinho/<int:item_id>/', views.remover_carrinho, name='remover_carrinho'),
+    path('limpar_carrinho/', views.limpar_carrinho, name='limpar_carrinho'),
 ]

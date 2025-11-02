@@ -116,6 +116,17 @@
                 style="object-fit: cover;">
         </div>
 
+        <!-- Filtro de Ordenação -->
+        <form method="get" class="mb-4 text-end">
+            <label for="ordem" class="me-2 fw-semibold">Ordenar por:</label>
+            <select name="ordem" id="ordem" class="form-select d-inline-block w-auto" onchange="this.form.submit()">
+                <option value="nome" {% if ordem == 'nome' %}selected{% endif %}>A → Z</option>
+                <option value="-nome" {% if ordem == '-nome' %}selected{% endif %}>Z → A</option>
+                <option value="recentes" {% if ordem == 'recentes' %}selected{% endif %}>Mais recentes</option>
+                <option value="antigos" {% if ordem == 'antigos' %}selected{% endif %}>Mais antigos</option>
+            </select>
+        </form>
+
         <!-- Itens Pendentes -->
         <h3 class="text-danger d-flex align-items-center mb-3">
             <i class="bi bi-bag-x-fill me-2"></i> Itens Pendentes
@@ -170,12 +181,15 @@
             {% endfor %}
         </ul>
 
-        <!-- Botão Adicionar -->
+        <!-- Botões de Adicionar Item e Limpar Carrinho -->
         <div class="text-center mb-5">
             <a href="{% url 'adicionar_item' %}" class="btn btn-outline-success btn-lg">
                 <i class="bi bi-plus-lg"></i> Adicionar Item
             </a>
-        </div>
+            <a href="{% url 'limpar_carrinho' %}" class="btn btn-outline-danger btn-lg ms-3">
+                <i class="bi bi-cart-x"></i> Limpar Carrinho
+            </a>
+        </div>    
     </div>
 
     <!-- Bootstrap JS -->

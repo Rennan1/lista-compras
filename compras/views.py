@@ -5,12 +5,29 @@ from .forms import ItemForm
 
 # Create your views here.
 def index(request):
-    pendentes = Item.objects.filter(comprado=False) # Filtra os itens que não foram comprados
-    carrinho = Item.objects.filter(comprado=True) # Filtra os itens que foram
+    ordem = request.GET.get('ordem', 'nome')  # padrão = ordem alfabética
+
+    if ordem == 'nome':
+        pendentes = Item.objects.filter(comprado=False).order_by('nome')
+        carrinho = Item.objects.filter(comprado=True).order_by('nome')
+    elif ordem == '-nome':
+        pendentes = Item.objects.filter(comprado=False).order_by('-nome')
+        carrinho = Item.objects.filter(comprado=True).order_by('-nome')
+    elif ordem == 'recentes':
+        pendentes = Item.objects.filter(comprado=False).order_by('-id')
+        carrinho = Item.objects.filter(comprado=True).order_by('-id')
+    elif ordem == 'antigos':
+        pendentes = Item.objects.filter(comprado=False).order_by('id')
+        carrinho = Item.objects.filter(comprado=True).order_by('id')
+    else:
+        pendentes = Item.objects.filter(comprado=False)
+        carrinho = Item.objects.filter(comprado=True)
+
 
     return render(request, 'index.html', 
         {'pendentes': pendentes,
-        'carrinho': carrinho}) # Passa os itens para o template
+        'carrinho': carrinho,
+        'ordem': ordem}) # Passa os itens para o template
 
 def adicionar_item(request):
     if request.method == 'POST':
@@ -50,4 +67,8 @@ def remover_carrinho(request, item_id):
     item = get_object_or_404(Item, id=item_id)
     item.comprado = False
     item.save()
+    return redirect('index')
+
+def limpar_carrinho(request):
+    Item.objects.filter(comprado=True).update(comprado=False) # Marca todos os itens como não comprados
     return redirect('index')
