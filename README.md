@@ -11,7 +11,8 @@ Permite adicionar, editar, excluir e marcar itens como comprados, com uma interf
 - ✏️ Editar itens existentes  
 - 🗑️ Excluir itens  
 - 🛍️ Mover itens entre a lista e o carrinho  
-- 🌙 Tema escuro com design responsivo  
+- 🌙 Tema escuro com design responsivo
+- ↕️ Ordenação/filtro de ordem alfabética e por odem de criação.
 - 💾 Banco de dados SQLite (local) ou PostgreSQL (produção)
 
 ---
@@ -116,4 +117,4 @@ Para produção, ele detecta automaticamente o `DATABASE_URL` (por exemplo no Re
 
 ## 🎥 Demonstração (GIF)
 
-![Demonstração do fluxo OAuth](media/demo.gif)
+![Demonstração do fluxo](media/demo.gif)
