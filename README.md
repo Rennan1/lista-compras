@@ -111,3 +111,9 @@ Para produção, ele detecta automaticamente o `DATABASE_URL` (por exemplo no Re
 ## 👨‍💻 Autor
 
 **Rennan Oliveira**  
+
+---
+
+## 🎥 Demonstração (GIF)
+
+![Demonstração do fluxo OAuth](media/demo.gif)
